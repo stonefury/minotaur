@@ -26,6 +26,8 @@ class Nat(Infrastructure):
 		private_route_table_id = self.get_route_table(private_subnet_id).id
 		topic_arn = self.get_sns_topic("autoscaling-notifications-" + environment)
 		role_name = self.get_role_name(self.__class__.__name__)
+                import pdb
+                pdb.set_trace()
 		self.parameters.append(("KeyName",             environment))
 		self.parameters.append(("Environment",         environment))
 		self.parameters.append(("VpcId",               vpc_id))

@@ -72,12 +72,16 @@ class Minotaur:
 		elif sys.argv[2] == commands[1] and sys.argv[1] == "infrastructure":
 			if sys.argv[3] == "all":
 				ip, mask = self.args.cidr_block.split('/')
-				public_ip = '.'.join([ip.split('.')[0], ip.split('.')[1], str(int(ip.split('.')[2])+2), ip.split('.')[3]])
+                                import pdb
+                                pdb.set_trace()
+				public_ip = '.'.join([ip.split('.')[0], ip.split('.')[1], str(int(ip.split('.')[2])+1), ip.split('.')[3]])
+#10.0.0.0/24
+                                #public_ip="10.0.1.0/24"
 				sns.Sns(self.args.environment, self.args.region, "cloudformation-notifications").deploy()
 				sns.Sns(self.args.environment, self.args.region, "autoscaling-notifications").deploy()
 				vpc.Vpc(self.args.environment, self.args.region, self.args.cidr_block).deploy()
-				subnet.Subnet(self.args.environment, self.args.region, self.args.availability_zone, "private", '/'.join([ip, str(int(mask)+2)])).deploy()
-				subnet.Subnet(self.args.environment, self.args.region, self.args.availability_zone, "public", '/'.join([public_ip, str(int(mask)+3)])).deploy()
+				subnet.Subnet(self.args.environment, self.args.region, self.args.availability_zone, "private", '/'.join([ip, str(int(mask)+1)])).deploy()
+				subnet.Subnet(self.args.environment, self.args.region, self.args.availability_zone, "public", '/'.join([public_ip, str(int(mask)+1)])).deploy()
 				nat.Nat(self.args.environment, self.args.region, self.args.availability_zone, self.args.instance_type).deploy()
 				bastion.Bastion(self.args.environment, self.args.region, self.args.availability_zone, self.args.instance_type, self.args.repo_url).deploy()
 			elif sys.argv[3] in infrastructure_list:

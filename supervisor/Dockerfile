@@ -90,6 +90,8 @@ RUN ln -s /deploy/minotaur.py /usr/local/bin/minotaur
 
 # Pre-creating deploy volume path
 VOLUME ["/deploy"]
+VOLUME ["/test"]
+RUN chown -R root:root /deploy
 
 # Cleaning up APT when done
 # RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
